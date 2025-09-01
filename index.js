@@ -36,21 +36,29 @@ function playRound(humanChoice, computerChoice){
     }
 }
 
-let i = 0;
+
 const play = () => {
+    
+    let i = 0;
+
+    while (i<5) {
     let humanChoice = prompt("Pick a move");
     const computerChoice = getComputerChoice();
     console.log(playRound(humanChoice, computerChoice))
     console.log("Your score = " + humanScore);
     console.log("Computer's score = " + computerScore);
+    
     i++;
+    }
+
+    // After 5 rounds
     if (i !== 5) {
         play();
     } else {
         if (humanScore>computerScore) {
             alert("Game Over: You scored: " + humanScore + " and Computer scored: "+computerScore + ". " + win)
         }
-        else if (humanScore=computerScore) {
+        else if (humanScore === computerScore) {
             alert("Game Over: You scored: " + humanScore + " and Computer scored: "+computerScore + ". " +tie)
         }
         else {
