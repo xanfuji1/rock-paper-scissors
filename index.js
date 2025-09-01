@@ -1,11 +1,17 @@
-let humanScore = parseInt(0);
-let computerScore = parseInt(0);
-let win = "You win!"
-let loss = "You lost..."
-let tie = "It's a tie!"
+let humanScore = 0;
+let computerScore = 0;
+
+const results = document.querySelector("#result");
+const currentScore = document.querySelector("#score");
+const outcome = document.querySelector(".outcome");
+
+const buttons = document.querySelectorAll(".game-button");
+buttons.forEach(button => {
+  button.addEventListener("click", playRound);
+});
 
 function getComputerChoice () {
-    randomNumber = (Math.floor(Math.random()*3)+1);
+    const randomNumber = (Math.floor(Math.random()*3)+1);
     if (randomNumber === 1) {
         return "rock";
     }
@@ -17,54 +23,38 @@ function getComputerChoice () {
     }
     }
 
-function playRound(humanChoice, computerChoice){
 
+function playRound(event){
+    const computerChoice = getComputerChoice();
+    const humanChoice = event.target.id;
+    currentScore.textContent = `You: ${humanScore} | Computer: ${computerScore}`;
+
+    if (humanScore === 5 || computerScore === 5) {
+    buttons.disabled= true;
+    finalResult.textContent = humanScore === 5 ? "You won the game!" : "Computer won the game!";
+    }
+    
     if ((humanChoice === "rock" && computerChoice === "scissors") ||
         (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissors" && computerChoice === "paper")
     ){
         humanScore ++;
-        return win;
-        
+        outcome.textContent="You win!";
     }
-    else if (humanChoice===computerChoice){
-        return tie;
+    else if (humanChoice === computerChoice){
+        outcome.textContent="It's a tie!";
     }
     else {
         computerScore ++;
-        return loss;
+         outcome.textContent="You lost...";
     }
+
 }
 
+const finalResult = document.querySelector("#final");
 
-const play = () => {
-    
-    let i = 0;
-
-    while (i<5) {
-    let humanChoice = prompt("Pick a move");
-    const computerChoice = getComputerChoice();
-    console.log(playRound(humanChoice, computerChoice))
-    console.log("Your score = " + humanScore);
-    console.log("Computer's score = " + computerScore);
-    
-    i++;
-    }
-
-    // After 5 rounds
-    if (i !== 5) {
-        play();
-    } else {
-        if (humanScore>computerScore) {
-            alert("Game Over: You scored: " + humanScore + " and Computer scored: "+computerScore + ". " + win)
-        }
-        else if (humanScore === computerScore) {
-            alert("Game Over: You scored: " + humanScore + " and Computer scored: "+computerScore + ". " +tie)
-        }
-        else {
-            alert("Game Over: You scored: " + humanScore + " and Computer scored: " + computerScore + ". " + loss)
-        }
-    }
-}
-
-play();
+/* things to add 
+1. update score at the same time as message is displayed. it is one behind.
+2. stop game after 5 is reached i.e. button no longer does anything
+3. add some css to make the game pretty
+*/
