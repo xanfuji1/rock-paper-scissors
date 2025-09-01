@@ -1,9 +1,11 @@
-let humanScore = 0;
-let computerScore = 0;
+let humanScore = parseInt(0);
+let computerScore = parseInt(0);
+let win = "You win!"
+let loss = "You lost..."
+let tie = "It's a tie!"
 
 function getComputerChoice () {
     randomNumber = (Math.floor(Math.random()*3)+1);
-    
     if (randomNumber === 1) {
         return "rock";
     }
@@ -15,19 +17,6 @@ function getComputerChoice () {
     }
     }
 
-const computerChoice = getComputerChoice();
-
-humanChoice = prompt("Choose rock, paper or scissors: ").toLowerCase();
-
-function getHumanChoice () {
-    humanChoice = humanChoice.toLowerCase();
-    console.log("You chose " + humanChoice);
-    return humanChoice;
-}
-
-console.log("You chose " + humanChoice);
-console.log("Computer chose " + computerChoice);
-
 function playRound(humanChoice, computerChoice){
 
     if ((humanChoice === "rock" && computerChoice === "scissors") ||
@@ -35,21 +24,39 @@ function playRound(humanChoice, computerChoice){
         (humanChoice === "scissors" && computerChoice === "paper")
     ){
         humanScore ++;
-        console.log("You win! +1 point to you");
+        return win;
         
     }
     else if (humanChoice===computerChoice){
-        console.log("Draw!")
+        return tie;
     }
     else {
         computerScore ++;
-        console.log("You lose... +1 point to computer")
+        return loss;
     }
-    
 }
 
-playRound(humanChoice,computerChoice);
+let i = 0;
+const play = () => {
+    let humanChoice = prompt("Pick a move");
+    const computerChoice = getComputerChoice();
+    console.log(playRound(humanChoice, computerChoice))
+    console.log("Your score = " + humanScore);
+    console.log("Computer's score = " + computerScore);
+    i++;
+    if (i !== 5) {
+        play();
+    } else {
+        if (humanScore>computerScore) {
+            alert("Game Over: You scored: " + humanScore + " and Computer scored: "+computerScore + ". " + win)
+        }
+        else if (humanScore=computerScore) {
+            alert("Game Over: You scored: " + humanScore + " and Computer scored: "+computerScore + ". " +tie)
+        }
+        else {
+            alert("Game Over: You scored: " + humanScore + " and Computer scored: " + computerScore + ". " + loss)
+        }
+    }
+}
 
-console.log ("Your score is " + humanScore);
-console.log("Computer score is " + computerScore);
-
+play();
